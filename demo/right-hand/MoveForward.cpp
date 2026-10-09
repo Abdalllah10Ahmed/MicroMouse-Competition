@@ -106,8 +106,10 @@ class MpuYaw {
 // WiFi configuration
 // ============================================================
 
-const char* WIFI_SSID = "عبدالله";
-const char* WIFI_PASSWORD = "1234567899";
+// Superseded demo sketch: credentials removed for publishing. The current
+// firmware keeps its credentials in main/secrets.h (git-ignored).
+const char* WIFI_SSID = "your-wifi-ssid";
+const char* WIFI_PASSWORD = "your-wifi-password";
 
 constexpr uint16_t WIFI_SERIAL_PORT = 23;
 

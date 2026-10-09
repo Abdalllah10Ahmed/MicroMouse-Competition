@@ -2,8 +2,16 @@
 
 Open main.ino in Arduino IDE and upload it to the ESP32. This firmware uses
 the tested one-cell forward and MPU6050 rotation controllers from the
-right-hand demo. It implements the exploration run only; there is no speed-run
-code.
+right-hand demo. It has two modes of operation:
+
+- **Exploration** (`s`/Start): flood-fill exploration of the 16x16 maze. The
+  solved map is saved to ESP32 flash (NVS) as soon as the goal is reached.
+- **Speed run** (automatic when a saved map exists): replays the saved map as
+  straight-line segments in runs of identical directions at cruise PWM 190,
+  turning only between runs.
+
+A hand gesture can also start a run: cover and hold the front ToF near a
+baseline for 3 s to arm, then release to start (see `HAND_*` in main.ino).
 
 Keep the robot still during startup calibration. When Wi-Fi connects, Serial
 prints a URL such as:
@@ -29,9 +37,11 @@ and east increases X. The four goal cells are (7,7), (7,8), (8,7) and (8,8).
 If the physical starting direction is not north in this coordinate system,
 rotate the maze convention or change robotHeading before running.
 
-At each cell the firmware confirms three front/left/right samples, stores the
-walls in absolute directions, recalculates flood distances, turns toward the
-best reachable neighbor, verifies that edge again, and moves one cell. Unknown
+At each cell the firmware confirms each opening with 8 repeated samples
+(`OPEN_CONFIRM_SAMPLES`, after a 120 ms settle) and classifies it from the
+average of the last 5, stores the walls in absolute directions, recalculates
+flood distances, turns toward the best reachable neighbor, verifies that edge
+again, and moves one cell. Unknown
 internal edges are considered traversable until measured. Outer boundary walls
 cannot be cleared by a sensor reading.
 

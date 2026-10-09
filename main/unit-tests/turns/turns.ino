@@ -2,8 +2,10 @@
 
 #include "rotation.h"
 
-const char *WIFI_SSID = "عبدالله";
-const char *WIFI_PASSWORD = "1234567899";
+// Credentials: paste your own SSID/password when flashing this calibration
+// sketch locally — the real values live only in main/secrets.h (git-ignored).
+const char *WIFI_SSID = "your-wifi-ssid";
+const char *WIFI_PASSWORD = "your-wifi-password";
 
 constexpr uint16_t WIFI_SERIAL_PORT = 23;
 

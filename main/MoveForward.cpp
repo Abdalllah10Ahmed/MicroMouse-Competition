@@ -7,6 +7,8 @@
 #include "DemoMotion.h"
 #include "config.h"
 #include "WebDashboard.h"
+// WiFi credentials live in the git-ignored secrets.h (see secrets.example.h).
+#include "secrets.h"
 
 constexpr int MPU_I2C_ATTEMPTS = 10;
 constexpr unsigned long MPU_I2C_RETRY_MS = 1000;
@@ -162,9 +164,7 @@ class MpuYaw {
 // WiFi configuration
 // ============================================================
 
-const char* WIFI_SSID = "عبدالله";
-const char* WIFI_PASSWORD = "1234567899";
-
+// WIFI_SSID / WIFI_PASSWORD come from secrets.h (git-ignored).
 constexpr uint16_t WIFI_SERIAL_PORT = 23;
 
 WiFiServer wifiSerialServer(WIFI_SERIAL_PORT);

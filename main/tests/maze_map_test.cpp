@@ -43,5 +43,22 @@ int main() {
   assert(maze.isGoal(7, 8));
   assert(!maze.isGoal(6, 8));
 
+  // NVS round-trip through the fake Preferences shim.
+  assert(maze.save());
+  MazeMap restored;
+  assert(restored.load());
+  for (int y = 0; y < MAZE_SIZE; ++y) {
+    for (int x = 0; x < MAZE_SIZE; ++x) {
+      const MazeCell &before = maze.cell(x, y);
+      const MazeCell &after = restored.cell(x, y);
+      assert(before.walls == after.walls);
+      assert(before.known == after.known);
+      assert(before.traversed == after.traversed);
+      assert(before.visited == after.visited);
+    }
+  }
+  assert(restored.cell(7, 7).distance == 0);
+  assert((restored.cell(0, 0).walls & (1U << (uint8_t)Direction::West)) != 0);
+
   std::puts("PASS: maze walls, boundaries, flood distances and next-cell choice");
 }

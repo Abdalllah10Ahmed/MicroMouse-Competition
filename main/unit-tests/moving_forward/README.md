@@ -1,3 +1,16 @@
+> Documentation drift (verified 2026-10-09 against the code in this folder):
+> this guide predates later tuning, so several numbers below are stale. The
+> source of truth is `MoveForward.cpp` / `MoveForward.h`:
+> - Cruise base PWM is **140** (`FORWARD_SPEED`), not 70; the wall correction
+>   still drops the affected side to **30** (`WALL_SLOW_SPEED`).
+> - Balance factors are **left 0.99 / right 1.0** (`LEFT_FACTOR`/`RIGHT_FACTOR`),
+>   not left 1.0 / right 0.78.
+> - `SINGLE_WALL_KP = 6.0`, `SINGLE_WALL_KD = 2.5` (not 3.0 / 0.05).
+> - Wall mode acquire/retain thresholds are **80 mm / 100 mm** with 3 confirming
+>   samples (`WallModeDetector`), not 120 mm / 140 mm.
+> Everything else here (mounting correction, encoder limits 4314/4322, case-3
+> encoder+MPU, direct MPU-6050 driver, host checks) matches the code.
+
 ## Right ToF mounting correction
 
 The right sensor is recessed 10 mm. The forward sketch subtracts RIGHT_TOF_INSET_MM = 10 from valid right readings before wall detection and both steering cases; telemetry labels R as corrected. Invalid readings remain invalid, and corrected negative clearances clamp to zero. Both side targets are now 40 mm from the chassis edge. The previous right target of 50 mm raw becomes 40 mm corrected, preserving its physical setpoint without compensating twice. Calibration sketches continue to report raw sensor ranges.

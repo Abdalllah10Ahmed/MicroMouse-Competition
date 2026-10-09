@@ -1,5 +1,12 @@
 # ToF sampling and filtering
 
+> Scope note: this document describes the standalone `moving_forward`
+> calibration sketch, whose `TofFilter` is a **three-sample median** (correct as
+> written below). The current `main` firmware uses a **five-sample sliding
+> average** instead (`TofFilter` in `main/MoveForward.h`, `samples_[5]`). The two
+> filters have not been reconciled; treat the difference as a known divergence
+> before reusing either (see `docs/06-PORTING-AND-LESSONS.md`).
+
 Front VL53L1X: short mode, 20 ms measurement budget, 25 ms continuous period.
 Left/right VL6180X: simultaneous single-shot starts, 30 ms maximum convergence
 instead of the library default 49 ms. Shots overlap the front measurement wait.

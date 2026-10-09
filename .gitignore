@@ -1,0 +1,9 @@
+# Local WiFi credentials — never commit. Copy main\secrets.example.h to
+# main\secrets.h and fill in real values.
+main/secrets.h
+
+# Arduino build output
+build/
+
+# Host test binaries
+*.exe
