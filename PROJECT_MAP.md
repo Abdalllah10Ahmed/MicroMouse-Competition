@@ -137,8 +137,14 @@ sensor reading.
 - Openings / tolerances / settle: `main/config.h`.
 - Motor pins/polarity/factors, encoder ticks/cell, cruise & floors, all PID
   gains, MPU sign, ToF timing, front-wall band: `main/MoveForward.cpp`.
-- Turn PID (`Kp=15.9, Kd=1.3`, min 130, max 180, tol 1.5°, 10 stable samples,
+- Turn PID (`Kp=15.9, Ki=0, Kd=1.3`, min 130, max 180, tol 1.5°, 10 stable samples,
   2200 ms) and its MPU pins: `main/rotation.cpp`.
+- **Best turn gains measured so far (2026-10-20, live-tuned from the browser in
+  the `turn_pid` bench test): `Kp=15.2, Ki=5, Kd=0.6, min=115, max=170`** with
+  tol 1.0°, 10 stable samples, `YAW_SIGN=-1`. Stored as `DEFAULT_*` in
+  `main/unit-tests/turn_pid/turn_pid.ino` so they survive a reboot/reflash.
+  **Not yet ported to `main/rotation.cpp`** — that would change robot behaviour
+  and needs explicit approval plus a floor re-test (5 trials x each direction).
 - Hand-gesture thresholds: `main.ino` (`HAND_*`).
 - WiFi SSID/password and TCP port: `main/MoveForward.cpp` (see security note).
 - Calibration procedures + recorded invariants: `main/unit-tests/README.md`,
